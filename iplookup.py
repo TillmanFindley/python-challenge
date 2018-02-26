@@ -80,9 +80,6 @@ def geoIP_all(array):
             data = np.array(i)
             df = pd.DataFrame(geo_list, columns=["ip","country","region","area","zip","longitude","latitude"])
     print df+"\n"
-    with open('geoIPAll_chart.csv', 'wb') as csvfile:
-        geo_write = csv.writer(csvfile, delimiter=' ', quotechar=' ', quoting=csv.QUOTE_MINIMAL)
-        geo_write.writerow(df)
 
 def rdap_search(string):
     res = urllib.urlopen(rdap_url+string)
@@ -196,11 +193,11 @@ def rdap_all(array):
             ref = (data['links'][1]['href']).encode('utf-8')
         except (KeyError, IndexError):
             ref = ''
-
         ipform = "IP data"+"\nHandle: "+nhandle+"\nParent Handle: "+phandle+"\nNet range: "+startip+" - "+endip+"\nIP Version: "+ipv+"\nLast Changed: "+update
         entform = "\nEntity"+"\nHandle: "+ename+"\nName: "+name+"\nRole: "+erole1+", "+erole2
         startend = "----------------------------------------------------------------"
         form = "RDAP:"+"\n"+ipform+"\n"+entform+"\n"+"Reference: "+ref+"\n"+startend+"\n"
+        print form
         rdap.append(form)
     with open('RDAPAll.csv', 'wb') as csvfile:
         geo_write = csv.writer(csvfile, delimiter=' ', quotechar=' ', quoting=csv.QUOTE_MINIMAL)
